@@ -11,6 +11,23 @@ Note the use of the JSON datatype for certain columns of the database.
 
 To migrate changes in the data model it uses **Alembic**, which is part of Flask-Migrate.
 
+## Installing and running the app
+
+Usual steps would be:
+
+Create virtual environment
+
+    python3 -m venv .venv
+    pip install requirements.txt
+
+Executing database migrations (see section on databases for additional info)
+
+    python manage.py db upgrade
+
+Running the app with:
+
+    python manage.py runserver
+
 ## Heroku
 
 The Heroku platform uses a container model to run and scale all Heroku apps. Heroku containers are called **dynos**. Dynos are isolated, virtualized Linux containers that are designed to execute code based on a user-specified command.
@@ -92,9 +109,9 @@ Finally, we can run our apps from the Heroku CLI with
 heroku run python app.py --app yourapp-stage
 ```
 
-## Database
+## Databas management
 
-## Local setup
+### Local setup
 
 It is possible to create a database locally by accessing the Postgres prompt and then creating a new database with:
 
@@ -162,7 +179,7 @@ Indexes:
     "results_pkey" PRIMARY KEY, btree (id)
 ```
 
-## Remote migration
+### Remote migration
 
 First, we need to add the Postgress addon to the staging server. If we are using a free-tierm then the appropiate add-on is called hobby-dev
 
