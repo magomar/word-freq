@@ -20,8 +20,49 @@ To migrate changes in the data model it uses **Alembic**, which is part of Flask
 
 ## Basic usage
 
-Database is initialized with:
+Before running any database script, you should create a database locally. Easiest way to do that is accessing the psql prompt and then creating a new database with:
+
+```sh
+create database wordfreq_dev
+```
+
+All database management is done trough the MigrateCommand extension. 
+At the beginning, the process consists of three steps.
+
+Fist, database is initialized with the `init` command:
 
 ```sh
 python manage.py db init
 ```
+
+Second, migrations are generated with the `migrate` command:
+
+```sh
+python manage.py db migrate
+```
+
+Finally, migrations are applied to the database with the `upgrade` command:
+
+```sh
+python manage.py db upgrade
+```
+
+Once all the steps are completed we can check the database tables as follows
+
+```sh
+psql wordfreq_dev
+wordfreq_dev=# \dt
+```
+
+You should get something similar to the following:
+
+```sh
+            List of relations
+ Schema |      Name       | Type  | Owner
+--------+-----------------+-------+-------
+ public | alembic_version | table | username
+ public | results         | table | username
+(2 rows)
+```
+
+
