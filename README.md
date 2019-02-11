@@ -89,7 +89,7 @@ heroku config:set APP_SETTINGS=config.ProductionConfig --remote pro
 Finally, we can run our apps from the Heroku CLI with
 
 ```sh
-heroku run python app.py --app yourapp
+heroku run python app.py --app yourapp-stage
 ```
 
 ## Database
@@ -167,22 +167,30 @@ Indexes:
 First, we need to add the Postgress addon to the staging server. If we are using a free-tierm then the appropiate add-on is called hobby-dev
 
 ```sh
-heroku addons:create heroku-postgresql:hobby-dev --app yourapp
+heroku addons:create heroku-postgresql:hobby-dev --app yourapp-stage
 ```
 
 We can check that a database connection have been created with
 
 ```sh
-heroku config --app yourapp
+heroku config --app yourapp-stage
 ```
 
 And the output will be something like this:
 
 ```sh
-=== word-freq-dev Config Vars
+=== yourapp-stage Config Vars
 APP_SETTINGS: config.StagingConfig
 DATABASE_URL: postgres://some_long_url...
 ```
 
-Finally, push the changes to the Heroky repository and execute the migrations
+Finally, we can execute the migration remotely with:
 
+    heroku run python manage.py db upgrade --app yourapp-stage
+
+And now, we can repeat the latest steps with the production app:
+
+```sh
+heroku addons:create heroku-postgresql:hobby-dev --app yourapp-stage
+heroku run python manage.py db upgrade --app yourapp-stage
+```
